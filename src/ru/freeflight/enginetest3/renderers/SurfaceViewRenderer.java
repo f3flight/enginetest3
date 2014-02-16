@@ -93,9 +93,9 @@ public class SurfaceViewRenderer extends SurfaceView implements SurfaceHolder.Ca
 		{			
 		    c.drawColor(Color.MAGENTA);
 			
-			int xshift = -(int)(gameData.x/100000)%bg.getWidth();
+			int xshift = -(int)(gameData.posX/100000)%bg.getWidth();
 			if (xshift > 0) xshift = xshift-bg.getWidth();
-			int yshift = -(int)(gameData.y/100000)%bg.getHeight();
+			int yshift = -(int)(gameData.posY/100000)%bg.getHeight();
 			if (yshift > 0) yshift = yshift-bg.getHeight();
 			int xtimes = (int)(Math.ceil(gameData.sw/(float)bg.getWidth())+Math.max(0,-Math.signum(xshift+bg.getWidth()-gameData.sw)));
 			int ytimes = (int)(Math.ceil(gameData.sh/(float)bg.getHeight())+Math.max(0,-Math.signum(yshift+bg.getHeight()-gameData.sh)));
@@ -123,15 +123,15 @@ public class SurfaceViewRenderer extends SurfaceView implements SurfaceHolder.Ca
 			//draw planet! hehehe
 			c.drawCircle((float)gameData.pXpos,(float)gameData.pYpos, (float)(gameData.pRad+3E5),pp.paint5);
 			c.drawCircle((float)gameData.pXpos,(float)gameData.pYpos, (float)(gameData.pRad),pp.paint3);
-			c.drawLine((float)gameData.x,(float)gameData.y,(float)gameData.pXpos,(float)gameData.pYpos,pp.paint4);
+			c.drawLine((float)gameData.posX,(float)gameData.posY,(float)gameData.pXpos,(float)gameData.pYpos,pp.paint4);
 			//c.drawLine(0,0,gameData.x,gameData.y,pp.paint5);
 			//c.drawCircle(1000,1000,100,pp.textPaint);
 			//c.drawCircle(3000,0,50,pp.textPaint);
 			//c.drawCircle(0,5000,300,pp.textPaint);
 			
 			Matrix m = new Matrix();
-			m.setRotate((float)gameData.angle,64,64);
-			m.postTranslate((float)gameData.x-64, (float)gameData.y-64);
+			m.setRotate((float)(gameData.bodyAngle*180/Math.PI),64,64);
+			m.postTranslate((float)gameData.posX-64, (float)gameData.posY-64);
 			c.drawBitmap(ship, m, null);
 			
 			c.setMatrix(null);

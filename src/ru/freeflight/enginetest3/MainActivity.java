@@ -5,6 +5,7 @@ import android.content.*;
 import android.os.*;
 import android.util.*;
 import android.view.*;
+import ru.freeflight.enginetest3.data.*;
 import ru.freeflight.enginetest3.renderers.*;
 
 public class MainActivity extends Activity
@@ -45,6 +46,26 @@ public class MainActivity extends Activity
 	{
 		Log.d(tag,this.getClass().getSimpleName()+" onDestroy");
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		
+		outState.putDouble("gamedata-x",svr.gameData.posX);
+		outState.putDouble("gamedata-y",svr.gameData.posY);
+		
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState)
+	{
+		synchronized (svr) {
+			svr.gameData.posX = savedInstanceState.getDouble("gamedata-x");
+			svr.gameData.posY = savedInstanceState.getDouble("gamedata-y");
+		}
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 	
 }
